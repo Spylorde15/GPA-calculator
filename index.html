@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Moyenne BAC Maroc 2024 | Score d'Acceptation CPGE, BTS, ENSA</title>
+    <meta name="description" content="Calculez votre moyenne du Baccalauréat marocain et estimez votre score d'acceptation pour CPGE, BTS, ENSA, EST, FST. Outil gratuit pour étudiants marocains.">
+    <meta name="keywords" content="calcul moyenne BAC Maroc, score d'acceptation CPGE Maroc, calcul BTS Maroc, moyenne baccalauréat, ENSA, EST, FST">
+    <meta name="author" content="BAC Calculator Maroc">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Calculateur Moyenne BAC Maroc 2024">
+    <meta property="og:description" content="Calculez votre moyenne BAC et estimez votre score d'acceptation pour les programmes post-BAC au Maroc.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_MA">
+    <meta property="og:site_name" content="BAC Calculator Maroc">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculateur Moyenne BAC Maroc 2024">
+    <meta name="twitter:description" content="Outil gratuit pour calculer votre moyenne BAC et score d'acceptation post-BAC.">
+    
+    <link rel="canonical" href="https://bac-calculator-maroc.vercel.app">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .chance-low { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .chance-medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .chance-high { background: linear-gradient(90deg, #10b981, #34d399); }
+        
+        .ad-placeholder {
+            background: repeating-linear-gradient(
+                45deg,
+                #f3f4f6,
+                #f3f4f6 10px,
+                #e5e7eb 10px,
+                #e5e7eb 20px
+            );
+            border: 2px dashed #9ca3af;
+        }
+        
+        .dark .ad-placeholder {
+            background: repeating-linear-gradient(
+                45deg,
+                #374151,
+                #374151 10px,
+                #4b5563 10px,
+                #4b5563 20px
+            );
+            border-color: #6b7280;
+        }
+        
+        .tab-active {
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+        }
+        
+        .input-field {
+            transition: all 0.2s ease;
+        }
+        
+        .input-field:focus {
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-scroll {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300">
+    <div id="app">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                            <span class="text-xl">🎓</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl md:text-2xl font-bold">BAC Calculator Maroc</h1>
+                            <p class="text-xs md:text-sm opacity-90">Calculateur Officiel 2024</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition" title="Mode sombre">
+                            <span id="darkModeIcon">🌙</span>
+                        </button>
+                        <button onclick="resetAllData()" class="p-2 rounded-lg bg-red-500/80 hover:bg-red-500 transition text-sm hidden md:block">
+                            🗑️ Réinitialiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ad Banner Top -->
+        <div class="max-w-7xl mx-auto px-4 mt-4">
+            <div class="ad-placeholder rounded-lg p-4 text-center text-gray-500 dark:text-gray-400">
+                <p class="text-sm">📢 Espace Publicitaire - Bannière Responsive (728x90)</p>
+                <p class="text-xs">Google AdSense Placeholder</p>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="max-w-7xl mx-auto px-4 mt-6">
+            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden">
+                <div class="flex overflow-x-auto mobile-scroll">
+                    <button onclick="showPage('calculator')" id="tab-calculator" class="tab-btn flex-1 min-w-max px-4 py-4 text-sm md:text-base font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 transition tab-active">
+                        📊 Calcul Moyenne
+                    </button>
+                    <button onclick="showPage('acceptance')" id="tab-acceptance" class="tab-btn flex-1 min-w-max px-4 py-4 text-sm md:text-base font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">
+                        🎯 Score d'Acceptation
+                    </button>
+                    <button onclick="showPage('info')" id="tab-info" class="tab-btn flex-1 min-w-max px-4 py-4 text-sm md:text-base font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">
+                        ℹ️ Comment ça marche?
+                    </button>
+                    <button onclick="showPage('about')" id="tab-about" class="tab-btn flex-1 min-w-max px-4 py-4 text-sm md:text-base font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 transition">
+                        📄 Pages
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- Main Content Area -->
+                <div class="flex-1">
+                    
+                    <!-- Calculator Page -->
+                    <div id="page-calculator" class="page-content">
+                        <!-- Level Selection -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 mb-6">
+                            <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">📚 Sélectionnez votre niveau</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <button onclick="setLevel('tronc')" id="btn-tronc" class="level-btn p-4 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-left">
+                                    <span class="text-2xl">📖</span>
+                                    <p class="font-medium text-gray-800 dark:text-white mt-2">Tronc Commun</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Classe</p>
+                                </button>
+                                <button onclick="setLevel('1bac')" id="btn-1bac" class="level-btn p-4 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-left">
+                                    <span class="text-2xl">📗</span>
+                                    <p class="font-medium text-gray-800 dark:text-white mt-2">1ère Année BAC</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">1BAC</p>
+                                </button>
+                                <button onclick="setLevel('2bac')" id="btn-2bac" class="level-btn p-4 rounded-lg border-2 border-purple-500 bg-purple-50 dark:bg-purple-900/30 transition text-left">
+                                    <span class="text-2xl">📘</span>
+                                    <p class="font-medium text-gray-800 dark:text-white mt-2">2ème Année BAC</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">2BAC</p>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Subject Grades Calculator -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-lg font-semibold text-gray-800 dark:text-white">📝 Notes des Matières</h2>
+                                <button onclick="addSubject()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition">
+                                    + Ajouter Matière
+                                </button>
+                            </div>
+                            
+                            <div id="subjects-container" class="space-y-3">
+                                <!-- Dynamic subjects will be added here -->
+                            </div>
+                            
+                            <!-- Average Display -->
+                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl text-white">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm opacity-90">Moyenne Générale</p>
+                                        <p class="text-3xl font-bold" id="subjects-average">0.00</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm opacity-90">Sur 20</p>
+                                        <div class="w-16 h-16 rounded-full border-4 border-white/30 flex items-center justify-center">
+                                            <span id="subjects-average-circle" class="text-xl font-bold">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2BAC Final Average Calculator -->
+                        <div id="bac-final-section" class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 mb-6">
+                            <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">🎓 Calcul Moyenne Finale BAC</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Formule officielle du système marocain</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Contrôle Continu
+                                        <span class="text-purple-600" id="cc-weight-display">(25%)</span>
+                                    </label>
+                                    <input type="number" id="controle-continu" min="0" max="20" step="0.01" placeholder="Ex: 14.50" 
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateFinalBAC()">
+                                    <input type="range" id="cc-weight" min="0" max="100" value="25" class="w-full mt-2" oninput="updateWeights()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Examen Régional
+                                        <span class="text-purple-600" id="er-weight-display">(25%)</span>
+                                    </label>
+                                    <input type="number" id="examen-regional" min="0" max="20" step="0.01" placeholder="Ex: 15.00"
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateFinalBAC()">
+                                    <input type="range" id="er-weight" min="0" max="100" value="25" class="w-full mt-2" oninput="updateWeights()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Examen National
+                                        <span class="text-purple-600" id="en-weight-display">(50%)</span>
+                                    </label>
+                                    <input type="number" id="examen-national" min="0" max="20" step="0.01" placeholder="Ex: 16.00"
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateFinalBAC()">
+                                    <input type="range" id="en-weight" min="0" max="100" value="50" class="w-full mt-2" oninput="updateWeights()">
+                                </div>
+                            </div>
+
+                            <!-- Final BAC Result -->
+                            <div class="p-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl text-white">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm opacity-90">Moyenne Finale du BAC</p>
+                                        <p class="text-4xl font-bold" id="final-bac-average">0.00</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm opacity-90" id="mention-label">Mention</p>
+                                        <p class="text-xl font-semibold" id="mention-value">-</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-sm opacity-90" id="bac-breakdown">
+                                    Formule: (CC × 25%) + (ER × 25%) + (EN × 50%)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ad In-Content -->
+                        <div class="ad-placeholder rounded-lg p-4 text-center text-gray-500 dark:text-gray-400 mb-6">
+                            <p class="text-sm">📢 Espace Publicitaire - In-Content (336x280)</p>
+                            <p class="text-xs">Google AdSense Placeholder</p>
+                        </div>
+                    </div>
+
+                    <!-- Acceptance Score Page -->
+                    <div id="page-acceptance" class="page-content hidden">
+                        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">🎯 Estimation du Score d'Acceptation Post-BAC</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Estimez vos chances d'admission dans les programmes sélectifs</p>
+
+                            <!-- Program Selection -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Programme ciblé</label>
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                                    <button onclick="selectProgram('BTS')" id="prog-BTS" class="prog-btn p-3 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-center">
+                                        <p class="font-medium text-gray-800 dark:text-white">BTS</p>
+                                    </button>
+                                    <button onclick="selectProgram('CPGE')" id="prog-CPGE" class="prog-btn p-3 rounded-lg border-2 border-purple-500 bg-purple-50 dark:bg-purple-900/30 transition text-center">
+                                        <p class="font-medium text-gray-800 dark:text-white">CPGE</p>
+                                    </button>
+                                    <button onclick="selectProgram('ENSA')" id="prog-ENSA" class="prog-btn p-3 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-center">
+                                        <p class="font-medium text-gray-800 dark:text-white">ENSA</p>
+                                    </button>
+                                    <button onclick="selectProgram('EST')" id="prog-EST" class="prog-btn p-3 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-center">
+                                        <p class="font-medium text-gray-800 dark:text-white">EST</p>
+                                    </button>
+                                    <button onclick="selectProgram('FST')" id="prog-FST" class="prog-btn p-3 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-center">
+                                        <p class="font-medium text-gray-800 dark:text-white">FST</p>
+                                    </button>
+                                    <button onclick="selectProgram('CUSTOM')" id="prog-CUSTOM" class="prog-btn p-3 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-purple-500 transition text-center">
+                                        <p class="font-medium text-gray-800 dark:text-white">Personnalisé</p>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Input Grades -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Moyenne 2BAC *</label>
+                                    <input type="number" id="acc-2bac" min="0" max="20" step="0.01" placeholder="Ex: 15.50"
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateAcceptance()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Moyenne 1BAC *</label>
+                                    <input type="number" id="acc-1bac" min="0" max="20" step="0.01" placeholder="Ex: 14.00"
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateAcceptance()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Moyenne Tronc Commun</label>
+                                    <input type="number" id="acc-tronc" min="0" max="20" step="0.01" placeholder="Optionnel"
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateAcceptance()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Note Examen National</label>
+                                    <input type="number" id="acc-national" min="0" max="20" step="0.01" placeholder="Ex: 16.00"
+                                        class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                        oninput="calculateAcceptance()">
+                                </div>
+                            </div>
+
+                            <!-- Key Subjects -->
+                            <div class="mb-6">
+                                <h3 class="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">📐 Matières Clés</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">Mathématiques</label>
+                                        <input type="number" id="acc-math" min="0" max="20" step="0.01" placeholder="Note /20"
+                                            class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">Physique-Chimie</label>
+                                        <input type="number" id="acc-physics" min="0" max="20" step="0.01" placeholder="Note /20"
+                                            class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">SVT / Sciences de l'Ingénieur</label>
+                                        <input type="number" id="acc-svt" min="0" max="20" step="0.01" placeholder="Note /20"
+                                            class="input-field w-full p-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Coefficients Display -->
+                            <div class="mb-6 p-4 bg-gray-50 dark:bg-slate-700 rounded-xl">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="text-md font-medium text-gray-700 dark:text-gray-300">⚙️ Coefficients (Ajustables)</h3>
+                                    <button onclick="resetCoefficients()" class="text-sm text-purple-600 hover:text-purple-800">Réinitialiser</button>
+                                </div>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="coefficients-display">
+                                    <div>
+                                        <label class="text-xs text-gray-500 dark:text-gray-400">2BAC</label>
+                                        <input type="number" id="coef-2bac" min="0" max="10" step="0.5" value="3"
+                                            class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded text-center dark:bg-slate-600 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-500 dark:text-gray-400">1BAC</label>
+                                        <input type="number" id="coef-1bac" min="0" max="10" step="0.5" value="2"
+                                            class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded text-center dark:bg-slate-600 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-500 dark:text-gray-400">Math</label>
+                                        <input type="number" id="coef-math" min="0" max="10" step="0.5" value="3"
+                                            class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded text-center dark:bg-slate-600 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-500 dark:text-gray-400">Physique</label>
+                                        <input type="number" id="coef-physics" min="0" max="10" step="0.5" value="2"
+                                            class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded text-center dark:bg-slate-600 dark:text-white"
+                                            oninput="calculateAcceptance()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Result -->
+                            <div id="acceptance-result" class="p-6 rounded-xl text-white chance-medium">
+                                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                                    <div>
+                                        <p class="text-sm opacity-90">Score d'Acceptation Estimé</p>
+                                        <p class="text-4xl font-bold" id="acceptance-score">0.00 / 20</p>
+                                    </div>
+                                    <div class="text-center md:text-right">
+                                        <p class="text-sm opacity-90">Niveau de Chance</p>
+                                        <p class="text-2xl font-semibold" id="chance-level">-</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="w-full bg-white/20 rounded-full h-3">
+                                        <div id="chance-bar" class="bg-white h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Disclaimer -->
+                            <div class="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                                <p class="text-sm text-yellow-800 dark:text-yellow-200">
+                                    ⚠️ <strong>Avertissement:</strong> Cette estimation est indicative et basée sur des tendances générales. 
+                                    La sélection finale dépend des établissements, du nombre de candidats, et d'autres critères spécifiques à chaque année.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Program Info Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">🏛️ CPGE</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Classes Préparatoires aux Grandes Écoles. Accent sur Math & Physique.</p>
+                                <p class="text-xs text-purple-600 mt-2">Seuil estimé: 14-16/20</p>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">🔧 ENSA</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Écoles Nationales des Sciences Appliquées. Profil équilibré requis.</p>
+                                <p class="text-xs text-purple-600 mt-2">Seuil estimé: 13-15/20</p>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">📚 BTS</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Brevet de Technicien Supérieur. Focus sur moyenne générale BAC.</p>
+                                <p class="text-xs text-purple-600 mt-2">Seuil estimé: 12-14/20</p>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5">
+                                <h3 class="font-semibold text-gray-800 dark:text-white mb-2">🔬 EST/FST</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Écoles Supérieures de Technologie / Facultés des Sciences. Accès ouvert.</p>
+                                <p class="text-xs text-purple-600 mt-2">Seuil estimé: 11-13/20</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Page -->
+                    <div id="page-info" class="page-content hidden">
+                        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">📖 Comment est calculée la moyenne du BAC?</h2>
+                            
+                            <div class="space-y-6">
+                                <div class="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                                    <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">Formule Officielle (2BAC)</h3>
+                                    <p class="text-blue-700 dark:text-blue-300 font-mono text-lg">
+                                        Moyenne = (CC × 25%) + (ER × 25%) + (EN × 50%)
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-3">📊 Composantes de la Moyenne</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                                            <span class="text-2xl">📝</span>
+                                            <div>
+                                                <p class="font-medium text-gray-800 dark:text-white">Contrôle Continu (CC) - 25%</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Moyenne des notes obtenues pendant l'année scolaire.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                                            <span class="text-2xl">📄</span>
+                                            <div>
+                                                <p class="font-medium text-gray-800 dark:text-white">Examen Régional (ER) - 25%</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Examen passé à la fin de la 1ère année BAC (matières non scientifiques).</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                                            <span class="text-2xl">🎓</span>
+                                            <div>
+                                                <p class="font-medium text-gray-800 dark:text-white">Examen National (EN) - 50%</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Examen final passé à la fin de la 2ème année BAC (matières principales).</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 dark:text-white mb-3">🏆 Système de Mentions</h3>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div class="p-3 bg-red-50 dark:bg-red-900/30 rounded-lg text-center">
+                                            <p class="font-bold text-red-600">Passable</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">10 - 12</p>
+                                        </div>
+                                        <div class="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg text-center">
+                                            <p class="font-bold text-yellow-600">Assez Bien</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">12 - 14</p>
+                                        </div>
+                                        <div class="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-center">
+                                            <p class="font-bold text-blue-600">Bien</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">14 - 16</p>
+                                        </div>
+                                        <div class="p-3 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
+                                            <p class="font-bold text-green-600">Très Bien</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">16 - 20</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg">
+                                    <h3 class="font-semibold text-purple-800 dark:text-purple-200 mb-2">💡 Conseil</h3>
+                                    <p class="text-purple-700 dark:text-purple-300 text-sm">
+                                        L'Examen National représente 50% de votre moyenne finale. Concentrez vos efforts sur les matières à fort coefficient pour maximiser votre score.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About/Pages Section -->
+                    <div id="page-about" class="page-content hidden">
+                        <div class="space-y-6">
+                            <!-- À propos -->
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6">
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">ℹ️ À Propos</h2>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                    BAC Calculator Maroc est un outil gratuit conçu pour aider les étudiants marocains à calculer leur moyenne du Baccalauréat 
+                                    et estimer leurs chances d'admission dans les programmes post-BAC sélectifs.
+                                </p>
+                                <p class="text-gray-600 dark:text-gray-400">
+                                    Notre mission est de fournir un outil fiable, simple et accessible à tous les étudiants marocains, 
+                                    qu'ils soient en Tronc Commun, 1BAC ou 2BAC.
+                                </p>
+                            </div>
+
+                            <!-- Politique de Confidentialité -->
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6">
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">🔒 Politique de Confidentialité</h2>
+                                <div class="text-gray-600 dark:text-gray-400 space-y-3 text-sm">
+                                    <p><strong>Collecte de données:</strong> Nous ne collectons aucune donnée personnelle. Toutes les informations que vous entrez sont stockées localement sur votre appareil (localStorage).</p>
+                                    <p><strong>Cookies:</strong> Ce site utilise des cookies uniquement pour améliorer votre expérience (préférences de thème).</p>
+                                    <p><strong>Publicités:</strong> Ce site affiche des publicités via Google AdSense. Google peut utiliser des cookies pour personnaliser les annonces.</p>
+                                    <p><strong>Vos droits:</strong> Vous pouvez à tout moment supprimer vos données en cliquant sur "Réinitialiser" dans le menu.</p>
+                                </div>
+                            </div>
+
+                            <!-- Disclaimer -->
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6">
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">⚠️ Avertissement (Disclaimer)</h2>
+                                <div class="text-gray-600 dark:text-gray-400 space-y-3 text-sm">
+                                    <p>Les calculs et estimations fournis par cet outil sont à titre <strong>indicatif uniquement</strong>.</p>
+                                    <p>Les formules utilisées sont basées sur le système éducatif marocain officiel, mais peuvent varier selon les établissements et les années.</p>
+                                    <p>Les scores d'acceptation estimés sont basés sur des tendances générales et ne garantissent en aucun cas l'admission.</p>
+                                    <p>Nous vous encourageons à consulter les sources officielles du Ministère de l'Éducation Nationale pour des informations précises.</p>
+                                </div>
+                            </div>
+
+                            <!-- Contact -->
+                            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6">
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">📧 Contact</h2>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                    Pour toute question, suggestion ou signalement d'erreur, n'hésitez pas à nous contacter:
+                                </p>
+                                <div class="space-y-2 text-gray-600 dark:text-gray-400">
+                                    <p>📧 Email: contact@bac-calculator-maroc.ma</p>
+                                    <p>📱 Réseaux sociaux: @BACCalculatorMaroc</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar (Desktop Only) -->
+                <aside class="hidden lg:block w-80">
+                    <div class="sticky top-24 space-y-4">
+                        <!-- Quick Stats -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5">
+                            <h3 class="font-semibold text-gray-800 dark:text-white mb-3">📈 Vos Statistiques</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Niveau</span>
+                                    <span class="font-medium text-gray-800 dark:text-white" id="stat-level">2BAC</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Moyenne Matières</span>
+                                    <span class="font-medium text-gray-800 dark:text-white" id="stat-subjects">0.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Moyenne BAC</span>
+                                    <span class="font-medium text-purple-600" id="stat-bac">0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Ad -->
+                        <div class="ad-placeholder rounded-lg p-4 text-center text-gray-500 dark:text-gray-400">
+                            <p class="text-sm">📢 Sidebar Ad</p>
+                            <p class="text-xs">(300x250)</p>
+                            <p class="text-xs mt-2">Desktop Only</p>
+                        </div>
+
+                        <!-- Tips -->
+                        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl shadow-md p-5 text-white">
+                            <h3 class="font-semibold mb-2">💡 Astuce du jour</h3>
+                            <p class="text-sm opacity-90" id="daily-tip">
+                                Concentrez-vous sur les matières à fort coefficient pour maximiser votre moyenne BAC!
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 mt-12">
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="text-2xl">🎓</span>
+                            <span class="font-bold text-gray-800 dark:text-white">BAC Calculator</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            L'outil gratuit pour calculer votre moyenne BAC et estimer vos chances d'admission post-BAC au Maroc.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-white mb-3">Outils</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><a href="#" onclick="showPage('calculator')" class="hover:text-purple-600">Calcul Moyenne BAC</a></li>
+                            <li><a href="#" onclick="showPage('acceptance')" class="hover:text-purple-600">Score d'Acceptation</a></li>
+                            <li><a href="#" onclick="showPage('info')" class="hover:text-purple-600">Guide BAC</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-white mb-3">Légal</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><a href="#" onclick="showPage('about')" class="hover:text-purple-600">À Propos</a></li>
+                            <li><a href="#" onclick="showPage('about')" class="hover:text-purple-600">Confidentialité</a></li>
+                            <li><a href="#" onclick="showPage('about')" class="hover:text-purple-600">Disclaimer</a></li>
+                            <li><a href="#" onclick="showPage('about')" class="hover:text-purple-600">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-white mb-3">Programmes</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li>CPGE Maroc</li>
+                            <li>ENSA Maroc</li>
+                            <li>BTS Maroc</li>
+                            <li>EST / FST</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 dark:border-slate-700 mt-8 pt-6 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        © 2024 BAC Calculator Maroc. Tous droits réservés. 
+                        <span class="mx-2">|</span>
+                        Made with ❤️ for Moroccan Students
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== STATE MANAGEMENT ====================
+        let state = {
+            level: '2bac',
+            subjects: [],
+            program: 'CPGE',
+            darkMode: false,
+            weights: { cc: 25, er: 25, en: 50 }
+        };
+
+        // Program presets with coefficients
+        const programPresets = {
+            CPGE: { bac2: 3, bac1: 2, math: 4, physics: 3, svt: 1, name: 'CPGE' },
+            BTS: { bac2: 4, bac1: 2, math: 2, physics: 2, svt: 1, name: 'BTS' },
+            ENSA: { bac2: 3, bac1: 2, math: 3, physics: 3, svt: 2, name: 'ENSA' },
+            EST: { bac2: 3, bac1: 2, math: 2, physics: 2, svt: 2, name: 'EST' },
+            FST: { bac2: 3, bac1: 2, math: 2, physics: 2, svt: 2, name: 'FST' },
+            CUSTOM: { bac2: 3, bac1: 2, math: 2, physics: 2, svt: 1, name: 'Personnalisé' }
+        };
+
+        // Default subjects by level
+        const defaultSubjects = {
+            tronc: [
+                { name: 'Mathématiques', grade: '', coefficient: 7 },
+                { name: 'Physique-Chimie', grade: '', coefficient: 5 },
+                { name: 'SVT', grade: '', coefficient: 5 },
+                { name: 'Français', grade: '', coefficient: 4 },
+                { name: 'Arabe', grade: '', coefficient: 4 },
+                { name: 'Anglais', grade: '', coefficient: 2 }
+            ],
+            '1bac': [
+                { name: 'Mathématiques', grade: '', coefficient: 7 },
+                { name: 'Physique-Chimie', grade: '', coefficient: 7 },
+                { name: 'SVT', grade: '', coefficient: 5 },
+                { name: 'Français', grade: '', coefficient: 4 },
+                { name: 'Arabe', grade: '', coefficient: 3 },
+                { name: 'Anglais', grade: '', coefficient: 2 },
+                { name: 'Éducation Islamique', grade: '', coefficient: 2 }
+            ],
+            '2bac': [
+                { name: 'Mathématiques', grade: '', coefficient: 9 },
+                { name: 'Physique-Chimie', grade: '', coefficient: 7 },
+                { name: 'SVT', grade: '', coefficient: 5 },
+                { name: 'Philosophie', grade: '', coefficient: 2 },
+                { name: 'Anglais', grade: '', coefficient: 2 },
+                { name: 'Éducation Islamique', grade: '', coefficient: 2 },
+                { name: 'Traduction', grade: '', coefficient: 2 }
+            ]
+        };
+
+        // Daily tips
+        const tips = [
+            "Concentrez-vous sur les matières à fort coefficient pour maximiser votre moyenne BAC!",
+            "L'Examen National compte pour 50% de votre note finale - préparez-le bien!",
+            "Pour CPGE, les notes en Math et Physique sont particulièrement importantes.",
+            "N'oubliez pas que le Contrôle Continu compte aussi - restez régulier!",
+            "Les ENSA regardent votre profil global - équilibrez toutes vos matières.",
+            "Commencez vos révisions tôt pour l'Examen Régional de 1BAC."
+        ];
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadState();
+            initializeApp();
+            setRandomTip();
+        });
+
+        function initializeApp() {
+            setLevel(state.level);
+            updateDarkMode();
+            updateStats();
+        }
+
+        function setRandomTip() {
+            const tipElement = document.getElementById('daily-tip');
+            if (tipElement) {
+                tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
+            }
+        }
+
+        // ==================== LOCAL STORAGE ====================
+        function saveState() {
+            const dataToSave = {
+                level: state.level,
+                subjects: state.subjects,
+                program: state.program,
+                darkMode: state.darkMode,
+                weights: state.weights,
+                bacInputs: {
+                    cc: document.getElementById('controle-continu')?.value || '',
+                    er: document.getElementById('examen-regional')?.value || '',
+                    en: document.getElementById('examen-national')?.value || ''
+                },
+                acceptanceInputs: {
+                    bac2: document.getElementById('acc-2bac')?.value || '',
+                    bac1: document.getElementById('acc-1bac')?.value || '',
+                    tronc: document.getElementById('acc-tronc')?.value || '',
+                    national: document.getElementById('acc-national')?.value || '',
+                    math: document.getElementById('acc-math')?.value || '',
+                    physics: document.getElementById('acc-physics')?.value || '',
+                    svt: document.getElementById('acc-svt')?.value || ''
+                }
+            };
+            localStorage.setItem('bacCalculatorState', JSON.stringify(dataToSave));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('bacCalculatorState');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state = { ...state, ...parsed };
+                
+                // Restore BAC inputs after DOM is ready
+                setTimeout(() => {
+                    if (parsed.bacInputs) {
+                        if (parsed.bacInputs.cc) document.getElementById('controle-continu').value = parsed.bacInputs.cc;
+                        if (parsed.bacInputs.er) document.getElementById('examen-regional').value = parsed.bacInputs.er;
+                        if (parsed.bacInputs.en) document.getElementById('examen-national').value = parsed.bacInputs.en;
+                        calculateFinalBAC();
+                    }
+                    if (parsed.acceptanceInputs) {
+                        if (parsed.acceptanceInputs.bac2) document.getElementById('acc-2bac').value = parsed.acceptanceInputs.bac2;
+                        if (parsed.acceptanceInputs.bac1) document.getElementById('acc-1bac').value = parsed.acceptanceInputs.bac1;
+                        if (parsed.acceptanceInputs.tronc) document.getElementById('acc-tronc').value = parsed.acceptanceInputs.tronc;
+                        if (parsed.acceptanceInputs.national) document.getElementById('acc-national').value = parsed.acceptanceInputs.national;
+                        if (parsed.acceptanceInputs.math) document.getElementById('acc-math').value = parsed.acceptanceInputs.math;
+                        if (parsed.acceptanceInputs.physics) document.getElementById('acc-physics').value = parsed.acceptanceInputs.physics;
+                        if (parsed.acceptanceInputs.svt) document.getElementById('acc-svt').value = parsed.acceptanceInputs.svt;
+                        selectProgram(state.program);
+                        calculateAcceptance();
+                    }
+                    if (parsed.weights) {
+                        document.getElementById('cc-weight').value = parsed.weights.cc;
+                        document.getElementById('er-weight').value = parsed.weights.er;
+                        document.getElementById('en-weight').value = parsed.weights.en;
+                        updateWeights();
+                    }
+                }, 100);
+            }
+        }
+
+        function resetAllData() {
+            if (confirm('Êtes-vous sûr de vouloir supprimer toutes vos données?')) {
+                localStorage.removeItem('bacCalculatorState');
+                location.reload();
+            }
+        }
+
+        // ==================== DARK MODE ====================
+        function toggleDarkMode() {
+            state.darkMode = !state.darkMode;
+            updateDarkMode();
+            saveState();
+        }
+
+        function updateDarkMode() {
+            if (state.darkMode) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeIcon').textContent = '☀️';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('darkModeIcon').textContent = '🌙';
+            }
+        }
+
+        // ==================== PAGE NAVIGATION ====================
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(`page-${pageName}`).classList.remove('hidden');
+            
+            // Update tabs
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.classList.remove('tab-active');
+            });
+            document.getElementById(`tab-${pageName}`).classList.add('tab-active');
+        }
+
+        // ==================== LEVEL MANAGEMENT ====================
+        function setLevel(level) {
+            state.level = level;
+            
+            // Update UI
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.classList.remove('border-purple-500', 'bg-purple-50', 'dark:bg-purple-900/30');
+                btn.classList.add('border-gray-200', 'dark:border-slate-600');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${level}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-gray-200', 'dark:border-slate-600');
+                activeBtn.classList.add('border-purple-500', 'bg-purple-50', 'dark:bg-purple-900/30');
+            }
+            
+            // Show/hide BAC final section
+            const bacSection = document.getElementById('bac-final-section');
+            if (level === '2bac') {
+                bacSection.classList.remove('hidden');
+            } else {
+                bacSection.classList.add('hidden');
+            }
+            
+            // Load default subjects if empty or level changed
+            if (!state.subjects.length || !state.subjects[0]) {
+                state.subjects = JSON.parse(JSON.stringify(defaultSubjects[level]));
+            }
+            
+            renderSubjects();
+            updateStats();
+            saveState();
+        }
+
+        // ==================== SUBJECTS MANAGEMENT ====================
+        function renderSubjects() {
+            const container = document.getElementById('subjects-container');
+            container.innerHTML = '';
+            
+            state.subjects.forEach((subject, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex flex-col md:flex-row gap-2 md:gap-3 p-3 bg-gray-50 dark:bg-slate-700 rounded-lg';
+                row.innerHTML = `
+                    <div class="flex-1">
+                        <input type="text" value="${subject.name}" placeholder="Nom de la matière"
+                            class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm dark:bg-slate-600 dark:text-white"
+                            onchange="updateSubject(${index}, 'name', this.value)">
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-24">
+                            <input type="number" value="${subject.grade}" placeholder="Note" min="0" max="20" step="0.01"
+                                class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm text-center dark:bg-slate-600 dark:text-white"
+                                oninput="updateSubject(${index}, 'grade', this.value)">
+                        </div>
+                        <div class="w-20">
+                            <input type="number" value="${subject.coefficient}" placeholder="Coef" min="1" max="10"
+                                class="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm text-center dark:bg-slate-600 dark:text-white"
+                                oninput="updateSubject(${index}, 'coefficient', this.value)">
+                        </div>
+                        <button onclick="removeSubject(${index})" class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg">
+                            🗑️
+                        </button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+            
+            calculateSubjectsAverage();
+        }
+
+        function addSubject() {
+            state.subjects.push({ name: '', grade: '', coefficient: 1 });
+            renderSubjects();
+            saveState();
+        }
+
+        function removeSubject(index) {
+            if (state.subjects.length > 1) {
+                state.subjects.splice(index, 1);
+                renderSubjects();
+                saveState();
+            }
+        }
+
+        function updateSubject(index, field, value) {
+            state.subjects[index][field] = field === 'name' ? value : parseFloat(value) || '';
+            calculateSubjectsAverage();
+            saveState();
+        }
+
+        function calculateSubjectsAverage() {
+            let totalWeighted = 0;
+            let totalCoef = 0;
+            
+            state.subjects.forEach(subject => {
+                if (subject.grade !== '' && subject.coefficient) {
+                    totalWeighted += parseFloat(subject.grade) * parseFloat(subject.coefficient);
+                    totalCoef += parseFloat(subject.coefficient);
+                }
+            });
+            
+            const average = totalCoef > 0 ? (totalWeighted / totalCoef) : 0;
+            
+            document.getElementById('subjects-average').textContent = average.toFixed(2);
+            document.getElementById('subjects-average-circle').textContent = Math.round(average);
+            document.getElementById('stat-subjects').textContent = average.toFixed(2);
+            
+            return average;
+        }
+
+        // ==================== BAC FINAL CALCULATION ====================
+        function updateWeights() {
+            const cc = parseInt(document.getElementById('cc-weight').value);
+            const er = parseInt(document.getElementById('er-weight').value);
+            const en = parseInt(document.getElementById('en-weight').value);
+            
+            state.weights = { cc, er, en };
+            
+            document.getElementById('cc-weight-display').textContent = `(${cc}%)`;
+            document.getElementById('er-weight-display').textContent = `(${er}%)`;
+            document.getElementById('en-weight-display').textContent = `(${en}%)`;
+            
+            calculateFinalBAC();
+            saveState();
+        }
+
+        function calculateFinalBAC() {
+            const cc = parseFloat(document.getElementById('controle-continu').value) || 0;
+            const er = parseFloat(document.getElementById('examen-regional').value) || 0;
+            const en = parseFloat(document.getElementById('examen-national').value) || 0;
+            
+            const ccWeight = state.weights.cc / 100;
+            const erWeight = state.weights.er / 100;
+            const enWeight = state.weights.en / 100;
+            
+            const finalAverage = (cc * ccWeight) + (er * erWeight) + (en * enWeight);
+            
+            document.getElementById('final-bac-average').textContent = finalAverage.toFixed(2);
+            document.getElementById('stat-bac').textContent = finalAverage.toFixed(2);
+            
+            // Calculate mention
+            let mention = '-';
+            if (finalAverage >= 16) mention = 'Très Bien 🏆';
+            else if (finalAverage >= 14) mention = 'Bien 🎖️';
+            else if (finalAverage >= 12) mention = 'Assez Bien 👍';
+            else if (finalAverage >= 10) mention = 'Passable ✓';
+            else if (finalAverage > 0) mention = 'Insuffisant ❌';
+            
+            document.getElementById('mention-value').textContent = mention;
+            
+            // Update breakdown
+            document.getElementById('bac-breakdown').textContent = 
+                `Formule: (${cc.toFixed(2)} × ${state.weights.cc}%) + (${er.toFixed(2)} × ${state.weights.er}%) + (${en.toFixed(2)} × ${state.weights.en}%) = ${finalAverage.toFixed(2)}`;
+            
+            saveState();
+        }
+
+        // ==================== ACCEPTANCE SCORE ====================
+        function selectProgram(program) {
+            state.program = program;
+            
+            // Update UI
+            document.querySelectorAll('.prog-btn').forEach(btn => {
+                btn.classList.remove('border-purple-500', 'bg-purple-50', 'dark:bg-purple-900/30');
+                btn.classList.add('border-gray-200', 'dark:border-slate-600');
+            });
+            
+            const activeBtn = document.getElementById(`prog-${program}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-gray-200', 'dark:border-slate-600');
+                activeBtn.classList.add('border-purple-500', 'bg-purple-50', 'dark:bg-purple-900/30');
+            }
+            
+            // Apply preset coefficients
+            const preset = programPresets[program];
+            document.getElementById('coef-2bac').value = preset.bac2;
+            document.getElementById('coef-1bac').value = preset.bac1;
+            document.getElementById('coef-math').value = preset.math;
+            document.getElementById('coef-physics').value = preset.physics;
+            
+            calculateAcceptance();
+            saveState();
+        }
+
+        function resetCoefficients() {
+            selectProgram(state.program);
+        }
+
+        function calculateAcceptance() {
+            // Get inputs
+            const bac2 = parseFloat(document.getElementById('acc-2bac').value) || 0;
+            const bac1 = parseFloat(document.getElementById('acc-1bac').value) || 0;
+            const tronc = parseFloat(document.getElementById('acc-tronc').value) || 0;
+            const national = parseFloat(document.getElementById('acc-national').value) || 0;
+            const math = parseFloat(document.getElementById('acc-math').value) || 0;
+            const physics = parseFloat(document.getElementById('acc-physics').value) || 0;
+            const svt = parseFloat(document.getElementById('acc-svt').value) || 0;
+            
+            // Get coefficients
+            const coefBac2 = parseFloat(document.getElementById('coef-2bac').value) || 0;
+            const coefBac1 = parseFloat(document.getElementById('coef-1bac').value) || 0;
+            const coefMath = parseFloat(document.getElementById('coef-math').value) || 0;
+            const coefPhysics = parseFloat(document.getElementById('coef-physics').value) || 0;
+            
+            // Calculate weighted score
+            let totalWeighted = 0;
+            let totalCoef = 0;
+            
+            if (bac2 > 0) { totalWeighted += bac2 * coefBac2; totalCoef += coefBac2; }
+            if (bac1 > 0) { totalWeighted += bac1 * coefBac1; totalCoef += coefBac1; }
+            if (math > 0) { totalWeighted += math * coefMath; totalCoef += coefMath; }
+            if (physics > 0) { totalWeighted += physics * coefPhysics; totalCoef += coefPhysics; }
+            if (national > 0) { totalWeighted += national * 2; totalCoef += 2; }
+            if (tronc > 0) { totalWeighted += tronc * 0.5; totalCoef += 0.5; }
+            if (svt > 0) { totalWeighted += svt * 1; totalCoef += 1; }
+            
+            const score = totalCoef > 0 ? (totalWeighted / totalCoef) : 0;
+            
+            // Update display
+            document.getElementById('acceptance-score').textContent = `${score.toFixed(2)} / 20`;
+            
+            // Determine chance level
+            const resultElement = document.getElementById('acceptance-result');
+            const chanceLevelElement = document.getElementById('chance-level');
+            const chanceBar = document.getElementById('chance-bar');
+            
+            resultElement.classList.remove('chance-low', 'chance-medium', 'chance-high');
+            
+            // Thresholds vary by program
+            const thresholds = {
+                CPGE: { low: 13, medium: 15 },
+                ENSA: { low: 12, medium: 14 },
+                BTS: { low: 11, medium: 13 },
+                EST: { low: 10, medium: 12 },
+                FST: { low: 10, medium: 12 },
+                CUSTOM: { low: 11, medium: 14 }
+            };
+            
+            const threshold = thresholds[state.program];
+            let chanceText = '';
+            let barWidth = 0;
+            
+            if (score >= threshold.medium) {
+                resultElement.classList.add('chance-high');
+                chanceText = 'Élevée 🎉';
+                barWidth = Math.min(100, 70 + (score - threshold.medium) * 5);
+            } else if (score >= threshold.low) {
+                resultElement.classList.add('chance-medium');
+                chanceText = 'Moyenne 🤞';
+                barWidth = 40 + ((score - threshold.low) / (threshold.medium - threshold.low)) * 30;
+            } else if (score > 0) {
+                resultElement.classList.add('chance-low');
+                chanceText = 'Faible ⚠️';
+                barWidth = Math.max(10, (score / threshold.low) * 40);
+            } else {
+                resultElement.classList.add('chance-medium');
+                chanceText = '-';
+                barWidth = 0;
+            }
+            
+            chanceLevelElement.textContent = chanceText;
+            chanceBar.style.width = `${barWidth}%`;
+            
+            saveState();
+        }
+
+        // ==================== STATS UPDATE ====================
+        function updateStats() {
+            const levelNames = {
+                'tronc': 'Tronc Commun',
+                '1bac': '1BAC',
+                '2bac': '2BAC'
+            };
+            document.getElementById('stat-level').textContent = levelNames[state.level];
+        }
+
+        // Initialize with 2BAC
+        setLevel('2bac');
+    </script>
+</body>
+</html>
